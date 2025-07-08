@@ -1,14 +1,14 @@
-function hello(x::Object)
+function _hello(x::Object)
     "Hello, " * x.who
 end
 
 # global UndefVarError (+ unused variable report)
-function hello2(x::Object)
+function _hello2(x::Object)
     "Hello, " * y.who
 end
 
 # local UndefVarError (+ unused variable report)
-function hello3(x::Object)
+function _hello3(x::Object)
     local y::Object
     if isempty(x.who)
         # return nothing
@@ -19,7 +19,7 @@ function hello3(x::Object)
 end
 
 # MethodErrorReport
-function hello4(x::Object)
+function _hello4(x::Object)
     "Hello, " + x.who
 end
 

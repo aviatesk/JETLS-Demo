@@ -1,8 +1,8 @@
 using Test, DemoPkg
 
 @testset "hello" begin
-    @test hello(Object("Julia")) == "Hello, Julia"
-    @test hello(Object("world")) == "Hello, world"
+    @test hello("Julia") == "Hello, Julia"
+    @test hello("world") == "Hello, world"
 end
 
 funcsin(x) = sin(x[])
