@@ -2,12 +2,12 @@ function _hello(x::Object)
     "Hello, " * x.who
 end
 
-# global UndefVarError (+ unused variable report)
+# undefined variable (global) and unused variable
 function _hello2(x::Object)
     "Hello, " * y.who
 end
 
-# local UndefVarError (+ unused variable report)
+# undefined variable (local)
 function _hello3(x::Object)
     local y::Object
     if isempty(x.who)
@@ -18,7 +18,7 @@ function _hello3(x::Object)
     "Hello, " * y.who
 end
 
-# MethodErrorReport
+# method error (`::String + ::String` is not defined)
 function _hello4(x::Object)
     "Hello, " + x.who
 end
