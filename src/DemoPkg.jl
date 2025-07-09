@@ -8,10 +8,7 @@ struct Object
     who::String
 end
 
-function hello(s::AbstractString)
-    _hello(Object(s))
-end
-
+function hello end
 function domath end
 
 include("included.jl")

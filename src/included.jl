@@ -1,15 +1,18 @@
-function _hello(x::Object)
+function hello(s::AbstractString)
+    hello1(Object(s))
+end
+
+function hello1(x::Object)
     "Hello, " * x.who
 end
 
 # undefined variable (global) and unused variable
-function _hello2(x::Object)
+function hello2(x::Object)
     "Hello, " * y.who
 end
 
 # undefined variable (local)
-function _hello3(x::Object)
-    local y::Object
+function hello3(x::Object)
     if isempty(x.who)
         # return nothing
     else
@@ -19,19 +22,20 @@ function _hello3(x::Object)
 end
 
 # method error (`::String + ::String` is not defined)
-function _hello4(x::Object)
+function hello4(x::Object)
     "Hello, " + x.who
 end
 
-function domath(x::Float64, ret::Symbol)
-    # # Input validation - FIXME
-    # if isnan(x) || isinf(x)
-    #     return (; error="Invalid input", value=x)
-    # end
+domath(x::Float64) = domath(x, :dict)
 
-    α, β = sin(x), cos(x)
+function domath(x::Float64, ret::Symbol)
+    # TODO Input validation
+
     x½, x², x³ = sqrt(abs(x)), x^2, x^3
-    γ = @evalpoly x 1.0 0.5  # 1 + 0.5x - 0.25x² # FIXME
+    # FIXME # γ == 1 + 0.5x - 0.25x²
+    # γ = @evalpoly             # 1 + 0.5x - 0.25x²
+    γ = 0.0
+
     if isinf(x)
         # TODO
     elseif x ≥ 0
@@ -43,23 +47,14 @@ function domath(x::Float64, ret::Symbol)
     if ret === :dict
         res = Dict{String, Float64}()
 
-        # res["α"] = α
-        # res["β"] = β
         res["x½"] = x½
         res["x²"] = x²
         res["x³"] = x³
 
-        res["γ"] = γ
+        # res["γ"] = γ
         res["δ"] = δ
-
     elseif ret === :vec
         res = SVector(x½, x², x³, γ, δ)
-
-    # elseif ret === :α
-    #     return α
-
-    # elseif ret === :β
-    #     return β
 
     elseif ret === :x½
         return x½

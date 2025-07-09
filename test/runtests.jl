@@ -6,18 +6,24 @@ using Test, DemoPkg
 end
 
 funcsin(x) = sin(x[])
-# @inferred funcsin(Ref{Any}(42))
+@inferred funcsin(Ref{Any}(42))
+
+@testset "fib" begin
+    fib(n) = n ≤ 2 ? n : fib(n-1) + fib(n-2)
+    @test fib(50) > 0 # long running (>20sec)
+end
 
 @testset "domath" begin
-    res = domath(2.0, :dict)
+    res = domath(2.0)
     @test res isa Dict{String, Float64}
-    @test res["α"] ≈ sin(2.0)
-    @test res["β"] ≈ cos(2.0)
+    @test res["x½"] == √2.0
     @test res["x²"] == 4.0
     @test res["x³"] == 8.0
     @test res["γ"] == 1.0
 
     @test domath(2.0, :x²) == 4.0
+
+    @test domath(2.0, :vec)[1] == √2.0
 
     @testset "Edge case" begin
         @test domath(-1.0, :x½) == 1.0  # sqrt(abs(-1))
@@ -25,13 +31,7 @@ funcsin(x) = sin(x[])
     end
 
     @testset "Error case" begin
-        let res_nan = domath(NaN, :dict)
-            @test res_nan isa NamedTuple{(:error, :value), Tuple{String, Float64}}
-            @test res_nan.error == "Invalid input"
-        end
-        let res_inf = domath(Inf, :dict)
-            @test res_inf isa NamedTuple{(:error, :value), Tuple{String, Float64}}
-            @test res_inf.error == "Invalid input"
-        end
+        @test_throws ArgumentError domath(NaN)
+        @test_throws ArgumentError domath(Inf)
     end
 end

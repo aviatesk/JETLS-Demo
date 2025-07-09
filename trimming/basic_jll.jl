@@ -14,7 +14,7 @@ function print_string(fptr::Ptr{Cvoid})
 end
 
 function safeprintln(s)
-    println(s) # FIXME println(Core.stdout, s)
+    println(s) # FIXME
 end
 
 function sayhello(s::AbstractString)
