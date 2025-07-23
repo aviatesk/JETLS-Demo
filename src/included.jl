@@ -29,7 +29,9 @@ end
 domath(x::Float64) = domath(x, :dict)
 
 function domath(x::Float64, ret::Symbol)
-    # TODO Input validation
+    if isinf(x)
+        error("TODO: Implement input validation")
+    end
 
     x½, x², x³ = sqrt(abs(x)), x^2, x^3
     # FIXME # γ == 1 + 0.5x - 0.25x²
