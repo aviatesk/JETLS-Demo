@@ -51,10 +51,13 @@ function domath(x::Float64, ret::Symbol)
         res["x²"] = x²
         res["x³"] = x³
 
-        # res["γ"] = γ
+        res["γ"] = γ
         res["δ"] = δ
+
+        return res
+
     elseif ret === :vec
-        res = SVector(x½, x², x³, γ, δ)
+        return SVector(x½, x², x³, γ, δ)
 
     elseif ret === :x½
         return x½
@@ -70,10 +73,7 @@ function domath(x::Float64, ret::Symbol)
 
     elseif ret === :δ
         return δ
-
-    else
-        error("Unknown return value specified: $ret")
     end
 
-    return res
+    error("Unknown return value specified: $ret")
 end
